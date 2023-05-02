@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run install:apps",
     "install:apps": "./apps_install.sh",
-    "pretest": "(cd ./app/backend && /bin/sh tsc_eval.sh)",
+    "pretest": "(cd ./app/backend && bash tsc_eval.sh)",
     "test": "env $(cat ./app/backend/.env) jest -i --forceExit --verbose",
     "test:browser": "SHOW_BROWSER=true npm test",
     "test:debug": "DEBUG=true npm test",
@@ -26,13 +26,15 @@
     "mysql2": "2.3.3",
     "nyc": "15.1.0",
     "sequelize": "6.25.5",
-    "sequelize-cli": "6.4.1"
+    "sequelize-cli": "6.4.1",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "camelcase": "6.3.0",
     "http-status-codes": "2.2.0",
     "jsonwebtoken": "8.5.1",
     "puppeteer": "13.2.0",
+    "tsc": "^2.0.4",
     "uuid": "8.3.2"
   }
 }

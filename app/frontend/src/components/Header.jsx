@@ -19,7 +19,6 @@ const Header = ({
     setLogin(false);
     navigate('/leaderboard');
   };
-
   return (
     <header className="common-header">
       <div className="image-content">
