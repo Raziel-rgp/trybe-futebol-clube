@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as teamController from './database/controller/Teams.controller';
 
 class App {
   public app: express.Express;
@@ -19,6 +20,9 @@ class App {
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
+
+    this.app.get('/teams', teamController.findAll);
+    this.app.get('/teams/:id', teamController.findOne);
 
     this.app.use(express.json());
     this.app.use(accessControl);

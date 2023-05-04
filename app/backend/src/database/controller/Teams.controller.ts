@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import TeamService from '../service/Team.service';
 
-const findAllTeams = async (_req: Request, res: Response) => {
+export const findAll = async (_req: Request, res: Response) => {
   try {
     const teams = await TeamService.findAllTeams();
     return res.status(200).json(teams);
@@ -10,12 +10,13 @@ const findAllTeams = async (_req: Request, res: Response) => {
   }
 };
 
-const findTeamById = async (req: Request, res: Response) => {
+export const findOne = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const team = await TeamService.findTeamById(id);
     return res.status(200).json(team);
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};

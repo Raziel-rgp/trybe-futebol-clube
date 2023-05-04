@@ -1,4 +1,4 @@
-import Team from '../models/Team.model';
+import Team from '../models/Teams.model';
 
 const findAllTeams = async () => {
   const teams = await Team.findAll();
@@ -6,7 +6,7 @@ const findAllTeams = async () => {
 };
 
 const findTeamById = async (id: string) => {
-  const team = await Team.findByPk(Number(id));
+  const team = await Team.findOne({ where: { id } });
   return team;
 };
 
