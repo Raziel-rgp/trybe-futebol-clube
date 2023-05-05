@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as teamController from './database/controller/Teams.controller';
-import LoginController from './database/controller/Login.controller';
+import loginRouter from './database/routes/Login.routes';
 
 class App {
   public app: express.Express;
@@ -22,12 +22,12 @@ class App {
       next();
     };
 
-    this.app.get('/teams', teamController.findAll);
-    this.app.get('/teams/:id', teamController.findOne);
-    this.app.get('/login', LoginController.findAll);
-
     this.app.use(express.json());
     this.app.use(accessControl);
+
+    this.app.get('/teams', teamController.findAll);
+    this.app.get('/teams/:id', teamController.findOne);
+    this.app.use('/login', loginRouter);
   }
 
   public start(PORT: string | number):void {
