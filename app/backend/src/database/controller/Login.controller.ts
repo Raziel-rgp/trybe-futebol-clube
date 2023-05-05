@@ -11,9 +11,8 @@ export default class LoginController {
   public loginController = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
     const result = await this._service.findEmail(email, password);
-    if (!result) return res.status(401).json({ message: 'Invalid email or password' });
-    const token = tokenGenerator(email);
-    return res.status(200).json({ token });
+    return !result ? res.status(401).json({ message: 'Invalid email or password' })
+      : res.status(200).json({ token: tokenGenerator(email) });
   };
 
   public findRole = async (req: Request, res: Response) => {
