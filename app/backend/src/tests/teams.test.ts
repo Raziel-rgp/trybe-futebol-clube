@@ -7,6 +7,7 @@ import { app } from '../app'; // Importa o arquivo app.ts, onde se encontra a ap
 
 import { Response } from 'superagent'; // Importa a interface Response, utilizada para manipulação da resposta HTTP
 import Teams from '../database/models/Teams.model'; // Importa o modelo de times do banco de dados
+import { teamMock } from './mock/team.mock';
 
 chai.use(chaiHttp); // Define que a biblioteca Chai utilizará a biblioteca Chai Http
 
@@ -19,35 +20,19 @@ describe('Seu teste', () => {
     sinon.restore(); // Restaura o estado da biblioteca Sinon após cada teste
   });
 
-  // Define o mock de times utilizado nos testes
-  let teamMock = [
-    {
-      "id": 1,
-      "teamName": "Avaí/Kindermann"
-    },
-    {
-      "id": 2,
-      "teamName": "Bahia"
-    },
-    {
-      "id": 3,
-      "teamName": "Botafogo"
-    },
-  ];
-
   // Testa se a rota '/times' retorna a lista de todos os times
   it('Retorna lista de todos os times', async () => {
     sinon.stub(Teams, 'findAll').resolves(teamMock as Teams[]); // Cria um stub para a função 'findAll' do modelo de times, simulando o retorno da lista de times
-    chaiHttpResponse = await chai.request(app).get('/times'); // Faz uma requisição GET para a rota '/times' e armazena a resposta HTTP na variável 'chaiHttpResponse'
+    chaiHttpResponse = await chai.request(app).get('/teams'); // Faz uma requisição GET para a rota '/times' e armazena a resposta HTTP na variável 'chaiHttpResponse'
     expect(chaiHttpResponse.status).to.be.eq(200); // Verifica se o status retornado é 200
     expect(chaiHttpResponse.body).to.be.deep.eq(teamMock); // Verifica se o corpo da resposta é a lista de times mockada
-    sinon.restore(); // Restaura o estado da biblioteca Sinon após o teste
+    sinon.restore(); // Restaura o estado da biblioteca Sinon após o teste\
   });
 
   // Testa se a rota '/times/:id' retorna o time com o id especificado
   it('Busca pelo Id', async () => {
     sinon.stub(Teams, 'findOne').resolves(teamMock[1] as Teams); // Cria um stub para a função 'findOne' do modelo de times, simulando o retorno do time com id 2
-    chaiHttpResponse = await chai.request(app).get('/times/2'); // Faz uma requisição GET para a rota '/times/2' e armazena a resposta HTTP na variável 'chaiHttpResponse'
+    chaiHttpResponse = await chai.request(app).get('/teams/2'); // Faz uma requisição GET para a rota '/times/2' e armazena a resposta HTTP na variável 'chaiHttpResponse'
     expect(chaiHttpResponse.status).to.be.eq(200); // Verifica se o status retornado é 200
     expect(chaiHttpResponse.body).to.be.deep.eq(teamMock[1]); // Verifica se o corpo da resposta é o time com id 2 mockado
     sinon.restore(); // Restaura o estado da biblioteca Sinon após o teste

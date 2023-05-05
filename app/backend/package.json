@@ -6,6 +6,8 @@
   "scripts": {
     "build": "/bin/sh tsc_eval.sh",
     "test": "mocha -r ts-node/register ./src/tests/*$NAME*.{test,spec}.ts -t 10000 --exit",
+    "test:wsl": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
+    "test:wsl:coverage": "nyc npm run test:wsl",
     "test:coverage": "nyc npm run test",
     "test:coverage:json": "nyc --reporter=json-summary npm run test",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
@@ -61,6 +63,6 @@
     "joi": "^17.9.2",
     "jsonwebtoken": "8.5.1",
     "mysql2": "2.3.3",
-    "sequelize": "6.25.5"
+    "sequelize": "^6.25.5"
   }
 }
