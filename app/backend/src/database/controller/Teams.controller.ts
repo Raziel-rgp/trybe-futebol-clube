@@ -13,7 +13,6 @@ export const findAll = async (_req: Request, res: Response) => {
 export const findOne = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    console.log(id);
     const team = await TeamService.findTeamById(id);
     return res.status(200).json(team);
   } catch (error) {

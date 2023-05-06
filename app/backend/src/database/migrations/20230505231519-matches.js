@@ -5,21 +5,21 @@ module.exports = {
     await queryInterface.createTable('matches', {
       id: {
         allowNull: false,
-        autoIncrement:true,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTERGER
+        type: Sequelize.INTEGER
       },
       home_team_id: {
-        type: Sequelize.INTERGER
+        type: Sequelize.INTEGER
       },
       home_team_goals: {
-        type: Sequelize.INTERGER
+        type: Sequelize.INTEGER
       },
       away_team_id: {
-        type: Sequelize.INTERGER
+        type: Sequelize.INTEGER
       },
       away_team_goals: {
-        type: Sequelize.INTERGER
+        type: Sequelize.INTEGER
       },
       in_progress: {
         type: Sequelize.BOOLEAN
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('matches')
+    await queryInterface.dropTable('matches');
   }
 };
