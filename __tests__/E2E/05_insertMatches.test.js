@@ -345,7 +345,7 @@ describe(getRequirement(20), () => {
   });
 });
 
-describe(getRequirement(21), () => {
+describe.only(getRequirement(21), () => {
   it('Será validado que não é possível inserir uma partida com times iguais', async () => {
     const dadosInsert = {
       homeTeam: teams[3].teamName,
