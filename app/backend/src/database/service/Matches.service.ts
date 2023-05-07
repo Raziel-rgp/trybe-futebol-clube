@@ -35,7 +35,7 @@ export const updateMatchSer = async (id: string, homeTeamGoals: number, awayTeam
 export const findMatchSer = async (id: number) => {
   const result = await Teams.findOne({ where: { id } });
   if (!result) return false;
-  return true;
+  return result;
 };
 
 export const createMatchSer = async (
@@ -50,6 +50,6 @@ export const createMatchSer = async (
     return { status: 404, message: 'There is no team with such id!' };
   }
   const newMatch = await Matches.create({
-    homeTeamGoals, awayTeamGoals, homeTeamId, awayTeamId, inProgress: true });
+    homeTeamGoals, awayTeamGoals, homeTeamId, awayTeamId, inProgress: 1 });
   return { status: 201, message: newMatch };
 };

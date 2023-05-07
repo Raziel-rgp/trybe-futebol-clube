@@ -47,5 +47,5 @@ export const creatNewMatch = async (req: Request, res: Response) => {
     homeTeamId,
     awayTeamId,
   );
-  return res.status(status).json({ message });
+  return res.status(status).json(message);
 };

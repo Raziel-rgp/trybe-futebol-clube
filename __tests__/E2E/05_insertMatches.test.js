@@ -253,7 +253,7 @@ describe(getRequirement(18), () => {
   });
 });
 
-describe(getRequirement(20), () => {
+describe.only(getRequirement(20), () => {
   it('Será validado na API que não é possível inserir uma partida sem um token', async () => {
     const dadosInsert = {
       homeTeam: teams[1].teamName,
@@ -345,7 +345,7 @@ describe(getRequirement(20), () => {
   });
 });
 
-describe.only(getRequirement(21), () => {
+describe(getRequirement(21), () => {
   it('Será validado que não é possível inserir uma partida com times iguais', async () => {
     const dadosInsert = {
       homeTeam: teams[3].teamName,
