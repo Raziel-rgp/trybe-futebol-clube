@@ -5,7 +5,8 @@ import Teams from '../models/Teams.model';
 // creditos ao André Pestana Silva 25B
 
 export const allMatchesLeader = async (id: string) => {
-  const matches = await Matches.findAll({ where: { id: { [Op.eq]: id } } });
+  const matches = await Matches.findAll({ where: { id: { [Op.eq]: (Number(id)) } } });
+  return matches;
 };
 
 export const totalWins = async (id: number) => {
