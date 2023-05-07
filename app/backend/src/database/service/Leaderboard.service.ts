@@ -1,19 +1,21 @@
-import { Sequelize, Op } from 'sequelize';
+/* import { Sequelize, Op } from 'sequelize';
 import Matches from '../models/Matches.model';
 import Teams from '../models/Teams.model';
 
 // creditos ao André Pestana Silva 25B
 
 export const allMatchesLeader = async (id: string) => {
-  const matches = await Matches.findAll({ where: { id: { [Op.eq]: (Number(id)) } } });
+  const matches = await Matches.findAll({ where: {
+    id: { [Op.eq]: (Number(id)) },
+    inProgress: false,
+  } });
   return matches;
 };
 
-export const totalWins = async (id: number) => {
-  const total = Matches.count({
+export const totalWins = async (id: string) => {
+  const match = allMatchesLeader(id);
+  const total = match.count({
     where: {
-      homeTeamId: id,
-      inProgress: false,
       homeTeamGoals: { [Op.gt]: Sequelize.col('away_team_goals') },
     },
   });
@@ -63,3 +65,4 @@ export const leaderBoard = async (teams: Teams[]) => {
     };
   }));
 };
+ */
