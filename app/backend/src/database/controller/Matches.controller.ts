@@ -47,5 +47,6 @@ export const creatNewMatch = async (req: Request, res: Response) => {
     homeTeamId,
     awayTeamId,
   );
-  return res.status(status).json({ message });
+  if (message === 'There is no team with such id!') return res.status(status).json({ message });
+  return res.status(status).json(message);
 };
