@@ -27,7 +27,7 @@ export const totalPoins = async (id: number): Promise<number> => {
   const homeWins = await funcFilter(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
   const awayWins = await funcFilter2(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
   const draws1 = await funcFilter(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
-  const draw2 = await funcFilter2(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals)
+  const draw2 = await funcFilter2(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
   const draw = draws1 + draw2;
   return (homeWins + awayWins) * 3 + draw;
 };
