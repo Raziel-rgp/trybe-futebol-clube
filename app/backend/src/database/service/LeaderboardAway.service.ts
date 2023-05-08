@@ -1,6 +1,6 @@
 import { findAllTeams } from './Team.service';
 import { totalPoins, totalDraws, totalWins, totalLoses,
-  totalGames, goalsFavor, goalsOwn } from '../utils/leaderboard.utils';
+  totalGames, goalsFavor, goalsOwn } from '../utils/leaderboardAway.utils';
 
 export const leaderBoardFormat = async () => {
   const find = await findAllTeams();
@@ -20,7 +20,7 @@ export const leaderBoardFormat = async () => {
   return result;
 };
 
-export const orderLeaderBoard = async () => {
+export const orderLeaderBoardAway = async () => {
   const board = await leaderBoardFormat();
   return board.sort((a, b) => {
     switch (true) {

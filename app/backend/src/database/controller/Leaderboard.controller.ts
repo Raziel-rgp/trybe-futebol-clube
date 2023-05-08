@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
-import leaderBoardFormat from '../service/Leaderboard.service';
+import { orderLeaderBoardHome } from '../service/LeaderboardHome.service';
+import { orderLeaderBoardAway } from '../service/LeaderboardAway.service';
+import { orderLeaderBoard } from '../service/Leaderboard.service';
 
-export const logAll = async (_req: Request, res: Response) => {
-  const sla = await leaderBoardFormat();
-  return res.status(200).json(sla);
+export const logAllHome = async (_req: Request, res: Response) => {
+  const result = await orderLeaderBoardHome();
+  return res.status(200).json(result);
 };
 
-export const log = async (req: Request, res: Response) => res.status(200).json(req);
+export const logAllAway = async (_req: Request, res: Response) => {
+  const result = await orderLeaderBoardAway();
+  return res.status(200).json(result);
+};
+
+export const logAll = async (_req: Request, res: Response) => {
+  const result = await orderLeaderBoard();
+  return res.status(200).json(result);
+};

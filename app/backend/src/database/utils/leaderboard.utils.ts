@@ -7,38 +7,48 @@ export const allMatchesHome = async (id: number): Promise<any> =>
 export const allMatchesAway = async (id: number): Promise<any> =>
   Matches.findAll({ where: { awayTeamId: id, inProgress: false } });
 
-const getTotal = async (id: number, filterFunc: (match: any) => boolean): Promise<number> => {
+const funcFilter = async (id: number, filterFunc: (match: any) => boolean): Promise<number> => {
   const matchesHome = await allMatchesHome(id);
-  const matchesAway = await allMatchesAway(id);
 
   const filteredHome = matchesHome.filter(filterFunc);
+
+  return filteredHome.length;
+};
+
+const funcFilter2 = async (id: number, filterFunc: (match: any) => boolean): Promise<number> => {
+  const matchesAway = await allMatchesAway(id);
+
   const filteredAway = matchesAway.filter(filterFunc);
 
-  return filteredHome.length + filteredAway.length;
+  return filteredAway.length;
 };
 
 export const totalPoins = async (id: number): Promise<number> => {
-  const homeWins = await getTotal(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
-  const awayWins = await getTotal(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
-  const draws = await getTotal(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
-
-  return (homeWins + awayWins) * 3 + draws;
+  const homeWins = await funcFilter(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
+  const awayWins = await funcFilter2(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
+  const draws1 = await funcFilter(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
+  const draw2 = await funcFilter2(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals)
+  const draw = draws1 + draw2;
+  return (homeWins + awayWins) * 3 + draw;
 };
 
 export const totalWins = async (id: number): Promise<number> => {
-  const homeWins = await getTotal(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
-  const awayWins = await getTotal(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
+  const homeWins = await funcFilter(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
+  const awayWins = await funcFilter2(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
 
   return homeWins + awayWins;
 };
 
-export const totalDraws = async (id: number): Promise<number> =>
-  getTotal(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
+export const totalDraws = async (id: number): Promise<number> => {
+  const draw = await funcFilter(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
+  const draw2 = await funcFilter2(id, (match: any) => match.homeTeamGoals === match.awayTeamGoals);
+  return draw + draw2;
+};
 
 export const totalLoses = async (id: number): Promise<number> => {
-  const homeLoses = await getTotal(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
-  const awayLoses = await getTotal(id, (match: any) => match.homeTeamGoals > match.awayTeamGoals);
-
+  const homeLoses = await funcFilter(id, (match: any) => match.homeTeamGoals < match.awayTeamGoals);
+  const awayLoses = await funcFilter2(id, (match: any) =>
+    match.homeTeamGoals > match.awayTeamGoals);
   return homeLoses + awayLoses;
 };
 
