@@ -1,68 +1,24 @@
-/* import { Sequelize, Op } from 'sequelize';
-import Matches from '../models/Matches.model';
-import Teams from '../models/Teams.model';
+import { findAllTeams } from './Team.service';
+import { totalPoins, totalDraws, totalWins, totalLoses,
+  totalGames, goalsFavor, goalsOwn } from '../utils/leaderboard.utils';
 
-// creditos ao André Pestana Silva 25B
-
-export const allMatchesLeader = async (id: string) => {
-  const matches = await Matches.findAll({ where: {
-    id: { [Op.eq]: (Number(id)) },
-    inProgress: false,
-  } });
-  return matches;
-};
-
-export const totalWins = async (id: string) => {
-  const match = allMatchesLeader(id);
-  const total = match.count({
-    where: {
-      homeTeamGoals: { [Op.gt]: Sequelize.col('away_team_goals') },
-    },
-  });
-  return total;
-};
-
-export const totalDraws = async (id: number) => {
-  const total = Matches.count({
-    where: {
-      homeTeamId: id,
-      inProgress: false,
-      homeTeamGoals: { [Op.eq]: Sequelize.col('away_team_goals') },
-    },
-  });
-  return total;
-};
-
-export const totalLoses = async (id: number) => {
-  const total = Matches.count({
-    where: {
-      homeTeamId: id,
-      inProgress: false,
-      homeTeamGoals: { [Op.lt]: Sequelize.col('away_team_goals') },
-    },
-  });
-  return total;
-};
-
-export const leaderBoard = async (teams: Teams[]) => {
-  Promise.all(teams.map(async ({ dataValues: { id, name, totalGames, goalsFavor, goalsOwn } }) => {
-    const totalW = await totalWins(id);
-    const totalD = await totalDraws(id);
-    const totalL = await totalLoses(id);
-    const totalP = (totalW * 3) + totalD;
-
+const leaderBoardFormat = async () => {
+  const find = await findAllTeams();
+  const result = Promise.all(find.map(async (team) => {
+    const { id, teamName } = team;
     return {
-      name,
-      totalGames,
-      totalW,
-      totalD,
-      totalL,
-      totalP,
-      efficiency: parseFloat(((totalP / (totalGames * 3)) * 100).toFixed(2)),
-      goalsFavor,
-      goalsOwn,
-      goalsBalance: goalsFavor - goalsOwn,
+      name: teamName,
+      totalPoints: await totalPoins(id),
+      totalGames: await totalGames(id),
+      totalVictories: await totalWins(id),
+      totalDraws: await totalDraws(id),
+      totalLosses: await totalLoses(id),
+      goalsFavor: await goalsFavor(id),
+      goalsOwn: await goalsOwn(id),
+      goalsBalance: await goalsFavor(id) - await goalsOwn(id),
     };
   }));
+  return result;
 };
- */
+
+export default leaderBoardFormat;

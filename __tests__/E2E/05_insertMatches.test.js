@@ -253,7 +253,7 @@ describe(getRequirement(18), () => {
   });
 });
 
-describe.only(getRequirement(20), () => {
+describe(getRequirement(20), () => {
   it('Será validado na API que não é possível inserir uma partida sem um token', async () => {
     const dadosInsert = {
       homeTeam: teams[1].teamName,
